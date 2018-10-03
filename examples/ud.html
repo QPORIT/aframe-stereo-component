@@ -1,0 +1,49 @@
+<html>
+<head>
+  <title>HIFF INTERVIEW</title>
+
+
+
+<script src="https://github.com/QPORIT/aframe-stereo-component/tree/master/examples/build.js"></script>
+
+<script>
+   // htdocs/omma/ud3d.html
+   // =====================
+
+   var AFRAME = require('aframe');
+   var stereoComponent = require('aframe-stereo-component').stereo_component;
+   var stereocamComponent = require('aframe-stereo-component').stereocam_component;
+
+   AFRAME.registerComponent('stereo', stereoComponent);
+   AFRAME.registerComponent('stereocam', stereocamComponent);
+</script>
+
+</head>
+
+<body>
+   <a-scene>
+   <!-- top and bottom equirectangular projected video -->
+   <video id="video" 
+      src="https://player.vimeo.com/external/292847230.hd.mp4?s=3b279b9f10ee1c795d85635baab0be946e09039b&profile_id=154&oauth2_token_id=1123159979"
+      crossorigin
+      autoplay
+      stereo
+  >
+   </video>
+
+
+    <!-- native sphere, will render on 'left' eye, and will take only the first half (top) of the video for projection -->
+    <a-entity geometry="primitive: sphere; radius: 100; segmentsWidth: 64; segmentsHeight: 64;"
+        material="shader: flat; src: #video;"
+        scale="-1 1 1" stereo="eye:left; split: vertical">
+    </a-entity>
+
+    <!-- native sphere, will render on 'right' eye, and will take only the second half (bottom) of the video for projection -->
+    <a-entity geometry="primitive: sphere; radius: 100; segmentsWidth: 64; segmentsHeight: 64;"
+        material="shader: flat; src: #video;"
+        scale="-1 1 1" stereo="eye:right; split: vertical">
+    </a-entity>
+
+  </a-scene>
+ </body>
+ </html>
